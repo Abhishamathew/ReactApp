@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import { useState } from 'react';
+import AddTodo from './AddTodo';
+import TodoList from './TodoList';
 import './App.css';
 
 function App() {
+  const [todos, setTodos] = useState([]);
+
+  const addTodo = (text) => {
+    const newTodo = { text, completed: false };
+    setTodos([...todos, newTodo]);
+  };
+
+  const toggleCompleted = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].completed = !newTodos[index].completed;
+    setTodos(newTodos);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Hi My Name is Abhisha Mathew. This is my new app.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>To-Do List</h1>
+      <AddTodo addTodo={addTodo} />
+      <TodoList todos={todos} toggleCompleted={toggleCompleted} />
     </div>
   );
 }
